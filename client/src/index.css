@@ -47,3 +47,7 @@
 .dark .scrollbar-thin::-webkit-scrollbar-thumb {
   background: #80609f;
 }
+
+.dark {
+  background-color: #18181b !important;
+}

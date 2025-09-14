@@ -1,23 +1,85 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useAppContext } from "../context/AppContext";
 import { assets } from "../assets/assets";
-import { Trash2, Search } from "lucide-react";
+import {
+  Trash2,
+  Search,
+  Image,
+  Gem,
+  Moon,
+  Sun,
+  UserCircle2,
+  LogOut,
+  X,
+} from "lucide-react";
+import moment from "moment";
 
-const SideBar = () => {
-  const { user, chats, selectedChat, theme, setTheme } = useAppContext();
+const THEME_KEY = "genonegpt-theme";
+
+const Logo = ({ theme }) => (
+  <div className="flex items-center mb-2">
+    {/* Logo Icon */}
+    <div className="relative flex items-center justify-center w-13 h-13 rounded-2xl bg-gradient-to-r from-[#A456F7] to-[#3D81F6] shadow-lg">
+      <span className="font-extrabold text-white text-2xl flex items-baseline">
+        G<span className="text-lg ml-0.5 align-super">1</span>
+      </span>
+      {/* "ai" label */}
+      <span className="absolute left-1.5 bottom-1.5 text-[10px] font-medium text-white/90 tracking-wide">
+        ai
+      </span>
+    </div>
+    {/* Logo Text */}
+    <div className="ml-2 flex flex-col justify-center">
+      <h1 className="text-xl font-bold bg-gradient-to-r from-[#A456F7] to-[#3D81F6] bg-clip-text text-transparent dark:text-white tracking-wide">
+        Gen1GPT
+      </h1>
+      <p className="text-xs font-medium bg-gradient-to-r from-[#A456F7] to-[#3D81F6] bg-clip-text text-transparent dark:text-purple-300 tracking-wide">
+        Intelligent AI Assistant
+      </p>
+    </div>
+  </div>
+);
+
+const SideBar = ({ isMenuOpen, setIsMenuOpen }) => {
+  const { user, chats, setSelectedChat, selectedChat, theme, setTheme } =
+    useAppContext();
   const [search, setSearch] = useState("");
+  const [currentTheme, setCurrentTheme] = useState(theme || "light");
+
+  // Sync theme with localStorage and html root
+  useEffect(() => {
+    const savedTheme = localStorage.getItem(THEME_KEY) || "light";
+    setCurrentTheme(savedTheme);
+    document.documentElement.classList.toggle("dark", savedTheme === "dark");
+    setTheme(savedTheme);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem(THEME_KEY, currentTheme);
+    document.documentElement.classList.toggle("dark", currentTheme === "dark");
+    setTheme(currentTheme);
+  }, [currentTheme, setTheme]);
+
+  const handleThemeToggle = () => {
+    setCurrentTheme(currentTheme === "dark" ? "light" : "dark");
+  };
+
+  // Theme text and icon logic
+  const themeText = currentTheme === "dark" ? "Dark Mode" : "Light Mode";
+  const ThemeIcon = currentTheme === "dark" ? Moon : Sun;
 
   return (
-    <div className="flex flex-col h-screen min-w-72 p-4 dark:bg-gradient-to-b from-[#24224]/30 to-[#000000]/30 border-r border-[#80609F]/20 backdrop-blur-3xl translate-all duration-500 max-md:absolute left-0 z-1">
-      {/* Logo */}
-      <img
-        src={theme === "dark" ? assets.logo_full : assets.logo_full_dark}
-        alt="Logo"
-        className="w-full max-w-48"
-      />
+    <div
+      className={`flex flex-col h-screen w-full md:w-75 lg:w-75 p-6 md:px-4 py-3 ${
+        currentTheme === "dark" ? "bg-[#18181b]" : "bg-white"
+      } dark:bg-[#18181b] border-r border-gray-200 dark:border-[#2a223a] backdrop-blur-3xl transition-all duration-500 max-md:absolute left-0 z-10 
+      ${!isMenuOpen && "max-md:-translate-x-full"}`}
+    >
+      {/* Custom Logo */}
+      <Logo theme={currentTheme} />
 
       {/* New Chat Button */}
-      <button className="flex cursor-pointer hover:scale-105 transition-transform duration-300 ease-in-out items-center justify-center bg-gradient-to-r from-[#A456F7] to-[#3D81F6] text-sm text-white font-semibold py-3 px-4 rounded-md mt-10 mb-2 w-full gap-2">
+      <button className="flex cursor-pointer hover:scale-105 transition-transform duration-300 ease-in-out items-center justify-center bg-gradient-to-r from-[#A456F7] to-[#3D81F6] text-sm text-white font-semibold py-3 px-4 rounded-md mt-6 mb-2 w-full gap-2">
         {/* Professional SVG plus icon */}
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -48,7 +110,7 @@ const SideBar = () => {
       </button>
 
       {/* Search Conversations */}
-      <div className="flex items-center gap-2 p-3 border border-gray-400/40 dark:border-white/30 rounded-md mt-4 transition-all duration-300 focus-within:border-2 focus-within:border-[#A456F7] focus-within:shadow-lg">
+      <div className="flex items-center gap-2 p-3 border border-gray-200 dark:border-gray-400/20 rounded-md mt-2 transition-all duration-300 focus-within:border-2 focus-within:border-[#A456F7] focus-within:shadow-[0_0_12px_2px_rgba(164,86,247,0.35)] focus-within:bg-white/60 dark:focus-within:bg-[#18181b]/60 backdrop-blur-md">
         {/* Lucide Search icon */}
         <Search
           size={16}
@@ -58,7 +120,7 @@ const SideBar = () => {
         <input
           type="text"
           placeholder="Search Conversations"
-          className="text-xs placeholder:text-gray-400 bg-transparent outline-none flex-1 transition-all duration-300 focus:border-none"
+          className="text-xs placeholder:text-gray-400 bg-transparent outline-none flex-1 transition-all duration-300"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
@@ -66,12 +128,12 @@ const SideBar = () => {
 
       {/* Recent Chats */}
       {chats.length > 0 && (
-        <p className="mt-2 text-sm font-semibold text-gray-800 dark:text-white">
+        <p className="mt-2 text-sm font-medium text-gray-800 dark:text-white">
           Recent Chats
         </p>
       )}
 
-      <div className="flex-1 text-sm overflow-y-auto mt-4 space-y-3 scrollbar-thin scrollbar-thumb-[#A456F7]/60 scrollbar-track-gray-200 dark:scrollbar-thumb-[#80609F] dark:scrollbar-track-[#24224]/30">
+      <div className="flex-1 text-sm overflow-y-auto mt-2 space-y-3 scrollbar-thin scrollbar-thumb-[#A456F7]/60 scrollbar-track-gray-200 dark:scrollbar-thumb-[#80609F] dark:scrollbar-track-[#18181b]">
         {chats
           .filter((chat) =>
             chat.messages[0]
@@ -82,8 +144,13 @@ const SideBar = () => {
           )
           .map((chat) => (
             <div
+              onClick={() => {
+                navigate("/");
+                setIsMenuOpen(false);
+                setSelectedChat(chat);
+              }}
               key={chat._id}
-              className="flex justify-between cursor-pointer group p-2 px-4 border rounded-md dark:bg-[#57317C]/10 border-gray-400/40 dark:border-white/30"
+              className="flex justify-between cursor-pointer group p-2 px-4 border rounded-md dark:bg-[#57317C]/10 border-gray-200 dark:border-[#2a223a]"
             >
               <div>
                 <p
@@ -98,7 +165,7 @@ const SideBar = () => {
                     : chat.name}
                 </p>
                 <p className="text-xs text-gray-500 dark:text-[#B1A6C0]">
-                  {chat.updatedAt}
+                  {moment(chat.updatedAt).fromNow()}
                 </p>
               </div>
 
@@ -113,6 +180,132 @@ const SideBar = () => {
             </div>
           ))}
       </div>
+
+      {/* Community Images */}
+      <div
+        onClick={() => {
+          navigate("/community");
+          setIsMenuOpen(false);
+        }}
+        className="flex items-center gap-2 p-3 border border-gray-200 dark:border-[#2a223a] rounded-md cursor-pointer hover:scale-103 transition-all mt-2"
+      >
+        <Image
+          size={20}
+          className="text-gray-500 dark:text-white"
+          strokeWidth={2}
+        />
+        <div className="flex flex-col text-sm">
+          <p className="hover:text-[#A456F7] transition-colors duration-200 text-sm font-medium text-gray-800 dark:text-white">
+            Community Images
+          </p>
+        </div>
+      </div>
+
+      {/* Credit Purchases Option */}
+      <div
+        onClick={() => {
+          navigate("/credits");
+          setIsMenuOpen(false);
+        }}
+        className="flex items-center gap-2 p-3 border border-gray-200 dark:border-[#2a223a] rounded-md cursor-pointer hover:scale-103 transition-all mt-2"
+      >
+        <Gem
+          size={20}
+          className="text-[#A456F7] dark:text-[#A456F7]"
+          strokeWidth={2.5}
+        />
+        <div className="flex flex-col text-sm ">
+          <p className=" text-sm font-medium text-gray-800 dark:text-white">
+            Credits : {user?.credits}
+          </p>
+          <p className="text-xs text-gray-500 dark:text-[#B1A6C0]">
+            Purchase credits to use Gen1GPT
+          </p>
+        </div>
+      </div>
+
+      {/* Theme Toggle */}
+      <div className="flex justify-between items-center gap-2 p-3 border border-gray-200 dark:border-[#2a223a] rounded-md cursor-pointer hover:scale-103 transition-all mt-2">
+        <ThemeIcon
+          size={20}
+          className={`transition-colors duration-200 ${
+            currentTheme === "dark" ? "text-[#A456F7]" : "text-gray-500"
+          }`}
+          strokeWidth={2}
+        />
+        <div className="flex items-center gap-2">
+          <p className="hover:text-[#A456F7] transition-colors duration-200 text-sm font-medium text-gray-800 dark:text-white">
+            {themeText}
+          </p>
+        </div>
+        <button
+          aria-label={`Switch to ${
+            currentTheme === "dark" ? "light" : "dark"
+          } mode`}
+          onClick={handleThemeToggle}
+          className="relative cursor-pointer inline-flex items-center w-10 h-6 rounded-full transition-colors duration-200 focus:outline-none"
+          style={{
+            background: currentTheme === "dark" ? "#A456F7" : "#e5e7eb",
+            border: "none",
+          }}
+        >
+          <span
+            className={`absolute left-1 top-1 w-4 h-4 rounded-full transition-transform duration-200 ${
+              currentTheme === "dark" ? "translate-x-4 bg-white" : "bg-gray-700"
+            }`}
+          />
+        </button>
+      </div>
+
+      {/* User Account */}
+      <div className="flex items-center justify-between gap-2 p-2 border border-gray-200 dark:border-[#2a223a] rounded-md cursor-pointer group mt-2 bg-white/70 dark:bg-[#18181b]/80 shadow-sm transition-all duration-300">
+        {/* Avatar */}
+        <UserCircle2
+          size={40}
+          className="text-[#A456F7] dark:text-[#A456F7] drop-shadow-lg"
+          strokeWidth={1.2}
+        />
+
+        {/* User Info */}
+        <div className="flex-1 flex flex-col justify-center px-2 min-w-0">
+          <p className="text-[14px] font-medium text-gray-800 dark:text-white truncate">
+            {user ? user.name : "Login to your account"}
+          </p>
+          <p className="text-xs text-gray-500 dark:text-[#B1A6C0] truncate">
+            {user ? user.email : "guest@example.com"}
+          </p>
+        </div>
+
+        {/* Logout Icon */}
+        {user && (
+          <button
+            title="Logout"
+            className="flex items-center justify-center ml-2 p-1 rounded-full hover:bg-[#A456F7]/10 transition-colors"
+            onClick={() => {
+              /* add logout logic here */
+            }}
+          >
+            <LogOut
+              size={20}
+              className="text-gray-400 hover:text-[#A456F7] transition-colors"
+              strokeWidth={2}
+            />
+          </button>
+        )}
+      </div>
+
+      {/* Close Sidebar Button for mobile */}
+      <button
+        onClick={() => setIsMenuOpen(false)}
+        className="absolute top-3 right-3 cursor-pointer p-2 rounded-xl shadow-sm bg-white dark:bg-[#242124] border border-gray-200 dark:border-[#2a223a] flex items-center justify-center md:hidden transition-all"
+        aria-label="Close sidebar"
+      >
+        <X
+          size={20}
+          className="text-[#A456F7] dark:text-[#A456F7]"
+          strokeWidth={2.2}
+        />
+      </button>
     </div>
   );
 };
