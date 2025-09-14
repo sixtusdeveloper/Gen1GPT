@@ -79,7 +79,7 @@ const SideBar = ({ isMenuOpen, setIsMenuOpen }) => {
       <Logo theme={currentTheme} />
 
       {/* New Chat Button */}
-      <button className="flex cursor-pointer hover:scale-105 transition-transform duration-300 ease-in-out items-center justify-center bg-gradient-to-r from-[#A456F7] to-[#3D81F6] text-sm text-white font-semibold py-3 px-4 rounded-md mt-6 mb-2 w-full gap-2">
+      <button className="flex cursor-pointer hover:scale-105 transition-transform duration-300 ease-in-out items-center justify-center bg-gradient-to-r from-[#A456F7] to-[#3D81F6] text-sm text-white font-semibold py-3 px-4 rounded-xl mt-6 mb-2 w-full gap-2">
         {/* Professional SVG plus icon */}
         <svg
           xmlns="http://www.w3.org/2000/svg"
