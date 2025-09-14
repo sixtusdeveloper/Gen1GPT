@@ -18,3 +18,32 @@
 ::-webkit-scrollbar {
   display: none;
 }
+
+/* Custom professional scrollbar styles */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: #a456f7 #f3f4f6;
+}
+
+.dark .scrollbar-thin {
+  scrollbar-color: #80609f #24224f;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+  background: #f3f4f6;
+  border-radius: 8px;
+}
+
+.dark .scrollbar-thin::-webkit-scrollbar {
+  background: #24224f;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: #a456f7;
+  border-radius: 8px;
+}
+
+.dark .scrollbar-thin::-webkit-scrollbar-thumb {
+  background: #80609f;
+}
