@@ -2,7 +2,7 @@ import logo from "./logo.svg";
 import logo_full from "./logo_full.svg";
 import logo_full_dark from "./logo_full_dark.svg";
 import search_icon from "./search_icon.svg";
-import user_icon from "./user_icon.svg";
+import user_icon from "./user_icon.jpeg";
 import theme_icon from "./theme_icon.svg";
 import send_icon from "./send_icon.svg";
 import stop_icon from "./stop_icon.svg";
@@ -289,13 +289,13 @@ export const dummyChats = [
     ],
     createdAt: "2025-08-13T17:29:52.421Z",
     updatedAt: "2025-08-14T09:39:19.046Z",
-    userName: "GreatStack",
+    userName: "Sixtusdev",
   },
   {
     _id: Date.now(),
     userId: "gs123456789",
     name: "New Chat",
-    userName: "GreatStack",
+    userName: "Sixtusdev",
     messages: [],
     createdAt: "2025-08-13T17:29:52.421Z",
     updatedAt: "2025-08-14T09:39:19.046Z",
@@ -305,46 +305,46 @@ export const dummyChats = [
 export const dummyPublishedImages = [
   {
     imageUrl: ai_image11,
-    userName: "GreatStack",
+    userName: "Sixtusdev",
   },
   {
     imageUrl: ai_image10,
-    userName: "GreatStack",
+    userName: "Sixtusdev",
   },
   {
     imageUrl: ai_image9,
-    userName: "GreatStack",
+    userName: "Sixtusdev",
   },
   {
     imageUrl: ai_image8,
-    userName: "GreatStack",
+    userName: "Sixtusdev",
   },
   {
     imageUrl: ai_image7,
-    userName: "GreatStack",
+    userName: "Sixtusdev",
   },
   {
     imageUrl: ai_image6,
-    userName: "GreatStack",
+    userName: "Sixtusdev",
   },
   {
     imageUrl: ai_image5,
-    userName: "GreatStack",
+    userName: "Sixtusdev",
   },
   {
     imageUrl: ai_image4,
-    userName: "GreatStack",
+    userName: "Sixtusdev",
   },
   {
     imageUrl: ai_image3,
-    userName: "GreatStack",
+    userName: "Sixtusdev",
   },
   {
     imageUrl: ai_image2,
-    userName: "GreatStack",
+    userName: "Sixtusdev",
   },
   {
     imageUrl: ai_image1,
-    userName: "GreatStack",
+    userName: "Sixtusdev",
   },
 ];

@@ -19,7 +19,7 @@ export const AppContextProvider = ({ children }) => {
   const fetchUsersChats = async () => {
     // Fetch chats logic here
     setChats(dummyChats); // Replace with fetched chats
-    setSelectedChat(dummyChats[0] || null);
+    setSelectedChat(dummyChats[0]);
   };
 
   //   THEME HANDLING

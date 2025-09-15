@@ -1,46 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useAppContext } from "../context/AppContext";
+import Logo from "./Logo";
+import { Trash2, Search, Gem, Moon, Sun, LogOut, X, Image } from "lucide-react";
 import { assets } from "../assets/assets";
-import {
-  Trash2,
-  Search,
-  Image,
-  Gem,
-  Moon,
-  Sun,
-  UserCircle2,
-  LogOut,
-  X,
-} from "lucide-react";
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
 
 const THEME_KEY = "genonegpt-theme";
 
-const Logo = ({ theme }) => (
-  <div className="flex items-center mb-2">
-    {/* Logo Icon */}
-    <div className="relative flex items-center justify-center w-13 h-13 rounded-2xl bg-gradient-to-r from-[#A456F7] to-[#3D81F6] shadow-lg">
-      <span className="font-extrabold text-white text-2xl flex items-baseline">
-        G<span className="text-lg ml-0.5 align-super">1</span>
-      </span>
-      {/* "ai" label */}
-      <span className="absolute left-1.5 bottom-1.5 text-[10px] font-medium text-white/90 tracking-wide">
-        ai
-      </span>
-    </div>
-    {/* Logo Text */}
-    <div className="ml-2 flex flex-col justify-center">
-      <h1 className="text-xl font-bold bg-gradient-to-r from-[#A456F7] to-[#3D81F6] bg-clip-text text-transparent dark:text-white tracking-wide">
-        Gen1GPT
-      </h1>
-      <p className="text-xs font-medium bg-gradient-to-r from-[#A456F7] to-[#3D81F6] bg-clip-text text-transparent dark:text-purple-300 tracking-wide">
-        Intelligent AI Assistant
-      </p>
-    </div>
-  </div>
-);
-
 const SideBar = ({ isMenuOpen, setIsMenuOpen }) => {
+  const navigate = useNavigate();
   const { user, chats, setSelectedChat, selectedChat, theme, setTheme } =
     useAppContext();
   const [search, setSearch] = useState("");
@@ -79,7 +48,7 @@ const SideBar = ({ isMenuOpen, setIsMenuOpen }) => {
       <Logo theme={currentTheme} />
 
       {/* New Chat Button */}
-      <button className="flex cursor-pointer hover:scale-105 transition-transform duration-300 ease-in-out items-center justify-center bg-gradient-to-r from-[#A456F7] to-[#3D81F6] text-sm text-white font-semibold py-3 px-4 rounded-xl mt-6 mb-2 w-full gap-2">
+      <button className="flex cursor-pointer hover:scale-105 transition-transform duration-300 ease-in-out items-center justify-center bg-gradient-to-r from-[#A456F7] to-[#3D81F6] text-sm text-white font-semibold py-3 px-4 rounded-md mt-6 mb-2 w-full gap-2">
         {/* Professional SVG plus icon */}
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -260,10 +229,10 @@ const SideBar = ({ isMenuOpen, setIsMenuOpen }) => {
       {/* User Account */}
       <div className="flex items-center justify-between gap-2 p-2 border border-gray-200 dark:border-[#2a223a] rounded-md cursor-pointer group mt-2 bg-white/70 dark:bg-[#18181b]/80 shadow-sm transition-all duration-300">
         {/* Avatar */}
-        <UserCircle2
-          size={40}
-          className="text-[#A456F7] dark:text-[#A456F7] drop-shadow-lg"
-          strokeWidth={1.2}
+        <img
+          src={assets.user_icon}
+          alt="User profile"
+          className="w-8 h-8 border border-gray-200 dark:border-[#2a223a] rounded-full"
         />
 
         {/* User Info */}
