@@ -8,6 +8,19 @@ import { useNavigate } from "react-router-dom";
 
 const THEME_KEY = "genonegpt-theme";
 
+const formatTimestamp = (timestamp) => {
+  const now = moment();
+  const time = moment(timestamp);
+  const diff = moment.duration(now.diff(time));
+  let humanized = diff.humanize();
+  // Replace "a" with "1" for singular units and ensure "ago" is appended
+  humanized = humanized.replace(/\ba\b/g, "1");
+  if (!humanized.endsWith("ago")) {
+    humanized += " ago";
+  }
+  return humanized;
+};
+
 const SideBar = ({ isMenuOpen, setIsMenuOpen }) => {
   const navigate = useNavigate();
   const { user, chats, setSelectedChat, selectedChat, theme, setTheme } =
@@ -130,11 +143,11 @@ const SideBar = ({ isMenuOpen, setIsMenuOpen }) => {
                   }`}
                 >
                   {chat.messages.length > 0
-                    ? chat.messages[0]?.content.slice(0, 34) + "..."
+                    ? chat.messages[0]?.content.slice(0, 24) + "..."
                     : chat.name}
                 </p>
                 <p className="text-xs text-gray-500 dark:text-[#B1A6C0]">
-                  {moment(chat.updatedAt).fromNow()}
+                  {formatTimestamp(chat.updatedAt)}
                 </p>
               </div>
 

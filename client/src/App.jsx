@@ -8,6 +8,7 @@ import ChatBox from "./components/ChatBox";
 import Message from "./components/Message";
 import { Route, Routes } from "react-router-dom";
 import { Menu } from "lucide-react";
+import "./assets/prism.css";
 
 const App = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(true); // Sidebar open by default
