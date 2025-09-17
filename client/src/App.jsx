@@ -6,12 +6,17 @@ import Community from "./pages/Community";
 import Credits from "./pages/Credits";
 import ChatBox from "./components/ChatBox";
 import Message from "./components/Message";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { Menu } from "lucide-react";
 import "./assets/prism.css";
 
 const App = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(true); // Sidebar open by default
+  const { pathname } = useLocation();
+
+  if (pathname === "/loading") {
+    return <Loading />;
+  }
 
   return (
     <>
