@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SideBar from "./components/SideBar";
 import Loading from "./pages/Loading";
 import Login from "./pages/Login";
@@ -13,6 +13,11 @@ import "./assets/prism.css";
 const App = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(true); // Sidebar open by default
   const { pathname } = useLocation();
+
+  // Auto-scroll to bottom on route change
+  useEffect(() => {
+    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+  }, [pathname]);
 
   if (pathname === "/loading") {
     return <Loading />;
