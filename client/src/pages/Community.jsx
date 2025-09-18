@@ -24,24 +24,29 @@ const Community = () => {
       </h1>
       {images.length > 0 ? (
         <div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {images.map((img, index) => (
-              <div
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 lg:gap-5">
+            {images.map((item, index) => (
+              <a
                 key={index}
-                className="bg-white dark:bg-[#2a223a] p-4 rounded-lg shadow-md border border-gray-200 dark:border-[#4a3a5d]/30"
+                href={item.imageUrl}
+                target="_blank"
+                className="relative group rounded-lg overflow-hidden block border border-gray-200 dark:border-[#4a3a5d]/30 shadow-sm hover:shadow-md transition-shadow duration-300 "
               >
                 <img
-                  src={img}
+                  src={item.imageUrl}
                   alt={`Published ${index}`}
-                  className="w-full h-auto rounded-md"
+                  className="w-full h-50 md:h-54 2xl:h-60 object-cover group-hover:scale-105 rounded-md transition-transform duration-300 ease-in-out"
                 />
-              </div>
+                <p className="absolute bottom-0 right-0 text-xs bg-black/50 backdrop-blur text-white px-4 py-1 rounded-tl-xl dark:text-purple-300 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  Created by: {item.userName}
+                </p>
+              </a>
             ))}
           </div>
         </div>
       ) : (
         <p className="text-center text-gray-500 dark:text-purple-300">
-          No images found
+          No images available
         </p>
       )}
     </div>
