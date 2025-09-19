@@ -13,7 +13,8 @@ export const AppContextProvider = ({ children }) => {
 
   //   DUMMY USER FETCH
   const fetchUser = async () => {
-    setUser(dummyUserData);
+    // setUser(); // Replace with actual user fetch logic
+    setUser(dummyUserData); // Replace with actual user fetch logic
   };
 
   const fetchUsersChats = async () => {

@@ -9,8 +9,11 @@ import Message from "./components/Message";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { Menu } from "lucide-react";
 import "./assets/prism.css";
+import { useAppContext } from "./context/AppContext";
 
 const App = () => {
+  const { user } = useAppContext();
+
   const [isMenuOpen, setIsMenuOpen] = useState(true); // Sidebar open by default
   const { pathname } = useLocation();
 
@@ -39,19 +42,26 @@ const App = () => {
           />
         </button>
       )}
-      <div className="dark:bg-gradient-to-b from-[#242124] to-[#000000] dark:text-white">
-        <div className="flex h-screen w-screen">
-          <SideBar isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
-          <Routes>
-            <Route path="/" element={<ChatBox />} />
-            <Route path="/loading" element={<Loading />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/community" element={<Community />} />
-            <Route path="/credits" element={<Credits />} />
-            <Route path="/message" element={<Message />} />
-          </Routes>
+
+      {user ? (
+        <div className="dark:bg-gradient-to-b from-[#242124] to-[#000000] dark:text-white">
+          <div className="flex h-screen w-screen">
+            <SideBar isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
+            <Routes>
+              <Route path="/" element={<ChatBox />} />
+              <Route path="/loading" element={<Loading />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/community" element={<Community />} />
+              <Route path="/credits" element={<Credits />} />
+              <Route path="/message" element={<Message />} />
+            </Routes>
+          </div>
         </div>
-      </div>
+      ) : (
+        <div className="flex items-center justify-center h-screen bg-gradient-to-br from-[#f3eaff] via-[#f7f7fa] to-[#e6e6ff] dark:from-[#18181b] dark:via-[#242124] dark:to-[#18181b]">
+          <Login />
+        </div>
+      )}
     </>
   );
 };
